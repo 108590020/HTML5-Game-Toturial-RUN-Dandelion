@@ -6,8 +6,11 @@ const gamePlay = {
         this.load.image('bg3', '../images/bg/bg3.png');
         this.load.image('bg4', '../images/bg/bg4.png');
         this.load.image('footer', '../images/bg/footer.png');
-
         this.load.spritesheet('user', '../images/player.png', {frameWidth: 144, frameHeight: 120});
+
+        this.timeInt = 30;
+        this.speedLv = 1;
+        this.gameStop = false;
     },
     create: function(){
         this.bg4 = this.add.tileSprite(w/2, h/2, w, h, 'bg4');
@@ -57,12 +60,29 @@ const gamePlay = {
             repeat: -1
         })
         
+        this.TimeText = this.add.text(w-180, h-50, `Time: ${this.timeInt}`, { color: '#fff', fontSize: '30px'});
+        
+        let timer = setInterval(() =>{
+            this.timeInt--;
+            if(this.timeInt < 20 && this.timeInt > 10){
+                this.speedLv += 0.1;
+            }
+            if(this.timeInt < 10 && this.timeInt > 0){
+                this.speedLv = 3;
+            }
+            this.TimeText.setText(`Time: ${this.timeInt}`);
+            if(this.timeInt <= 0){
+                this.gameStop = true;
+                clearInterval(timer);
+            }
+        }, 1000)
     },
     update: function(){
-        this.bg3.tilePositionX += 1;
-        this.bg2.tilePositionX += 2;
-        this.bg1.tilePositionX += 3;
-        this.footer.tilePositionX += 3;
+        if(this.gameStop) return;
+        this.bg3.tilePositionX += 1 * this.speedLv;
+        this.bg2.tilePositionX += 2 * this.speedLv;
+        this.bg1.tilePositionX += 3 * this.speedLv;
+        this.footer.tilePositionX += 3 * this.speedLv;
 
         const keyboard = this.input.keyboard.createCursorKeys();
         if (keyboard.right.isDown) {

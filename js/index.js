@@ -1,6 +1,3 @@
-const w = 800;
-const h = 450;
-
 const config = {
     type: Phaser.AUTO,
     width: w,
@@ -15,6 +12,7 @@ const config = {
             debug: true
         },
     },
-    scene: [ gameStart, gamePlay ]
+    scene: [ gamePlay,
+            gameStart,  ]
 }
 const game = new Phaser.Game(config);
