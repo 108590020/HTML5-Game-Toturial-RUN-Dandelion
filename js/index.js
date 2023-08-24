@@ -1,20 +1,20 @@
-const gameStart = {
-    key: 'gameStart',
-    preload: function(){
-        // 載入資源
-    },
-    create: function(){
-        // 資源載入完成，加入遊戲物件及相關設定
-    },
-    update: function(){
-        // 遊戲狀態更新
-    }
-}
+const w = 800;
+const h = 450;
+
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 450,
+    width: w,
+    height: h,
     parent: 'app',
-    scene: []
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: {
+                y: 700
+            },
+            debug: true
+        },
+    },
+    scene: [ gameStart, gamePlay ]
 }
 const game = new Phaser.Game(config);
